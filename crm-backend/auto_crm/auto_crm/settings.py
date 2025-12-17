@@ -122,6 +122,8 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
     'http://localhost:5173'
 ).split(',')
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Optional: If you face persistent CORS issues during initial deployment,
 # uncomment this line temporarily to allow all domains.
 # CORS_ALLOW_ALL_ORIGINS = True  
