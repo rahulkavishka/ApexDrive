@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { DollarSign, TrendingUp, Briefcase, AlertTriangle, ArrowRight } from 'lucide-react';
+import { DollarSign, TrendingUp, Briefcase, AlertTriangle} from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 export const Financials = () => {

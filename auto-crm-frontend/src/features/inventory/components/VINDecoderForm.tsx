@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Box, Briefcase, Loader2, Save, Search, Upload, X } from 'lucide-react';
+import { Box, Loader2, Save, Upload, X } from 'lucide-react';
 import { InventoryList } from './InventoryList'; 
 import api from '@/lib/api';
 

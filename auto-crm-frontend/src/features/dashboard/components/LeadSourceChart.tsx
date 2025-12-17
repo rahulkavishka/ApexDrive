@@ -33,7 +33,7 @@ export const LeadSourceChart = ({ data }: { data: any[] }) => {
               dataKey="value"
               stroke="none" // Removes the white outline to look clean on dark mode
             >
-              {cleanData.map((entry, index) => (
+              {cleanData.map((_entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>

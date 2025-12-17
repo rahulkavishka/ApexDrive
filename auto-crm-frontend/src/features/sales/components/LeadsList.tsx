@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Users, Phone, CarFront, Search, Trash2, ChevronDown, DollarSign } from "lucide-react";
+import { Users, Phone, CarFront, Search, Trash2, ChevronDown} from "lucide-react";
 import { useAuth } from '@/context/AuthContext';
 import api from "@/lib/api";
 

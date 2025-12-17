@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Car, Users, Wrench, TrendingUp, Activity, Calendar as CalendarIcon, ArrowRight, Settings, Briefcase } from "lucide-react";
+import { Car, Users, Wrench, TrendingUp, Activity, Calendar as CalendarIcon, Settings, Briefcase } from "lucide-react";
 import { RevenueChart } from './RevenueChart';
 import { LeadSourceChart } from './LeadSourceChart';
 

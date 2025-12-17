@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import { Camera, Upload, User, History, Save, CheckCircle, AlertCircle, Search, Clock, Loader2, DollarSign, Printer, ChevronDown, Calendar as CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

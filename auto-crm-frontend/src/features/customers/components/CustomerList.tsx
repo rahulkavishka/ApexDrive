@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Search, Users, ChevronRight, User } from 'lucide-react';
+import { Search, Users, ChevronRight} from 'lucide-react';
 import { CustomerProfileModal } from './CustomerProfileModal';
 
 export const CustomerList = () => {
