@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Search, CarFront, RefreshCw, Pencil, Trash2, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { EditVehicleModal } from './EditVehicleModal'; 
+import { EditVehicleModal } from './EditVehicleModal';
 
 // Updated Interface to include cost_price
 interface Vehicle {
@@ -27,12 +27,12 @@ interface Vehicle {
 
 export const InventoryList = () => {
   // --- 1. USE YOUR EXISTING AUTH CONTEXT ---
-  const { user, isManager } = useAuth(); 
-  
+  const { user, isManager } = useAuth();
+
   // State
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Edit Modal State
   const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +44,10 @@ export const InventoryList = () => {
   const fetchInventory = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:8000/api/inventory/vehicles/');
+      // Define the base URL
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+      const res = await axios.get(`${API_BASE_URL}/api/inventory/vehicles/`);
       setVehicles(res.data);
     } catch (error) {
       console.error("Failed to load inventory", error);
@@ -61,7 +64,10 @@ export const InventoryList = () => {
   const handleDelete = async (id: number) => {
     if (!window.confirm("Are you sure you want to delete this vehicle? This cannot be undone.")) return;
     try {
-      await axios.delete(`http://localhost:8000/api/inventory/vehicles/${id}/`);
+      // Define the base URL
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+      await axios.delete(`${API_BASE_URL}/api/inventory/vehicles/${id}/`);
       setVehicles(prev => prev.filter(v => v.id !== id));
     } catch (error) {
       alert("Failed to delete vehicle");
@@ -103,10 +109,10 @@ export const InventoryList = () => {
 
   return (
     <div className="space-y-6">
-      
+
       {/* 1. EDIT MODAL */}
       {editingVehicle && (
-        <EditVehicleModal 
+        <EditVehicleModal
           vehicle={editingVehicle}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
@@ -118,8 +124,8 @@ export const InventoryList = () => {
       <div className="flex flex-col md:flex-row gap-4 justify-between items-end md:items-center bg-apex-surface p-4 rounded-xl shadow-lg border border-apex-border">
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-3 h-4 w-4 text-apex-muted" />
-          <Input 
-            placeholder="Search Make, Model, VIN..." 
+          <Input
+            placeholder="Search Make, Model, VIN..."
             className="pl-10 bg-apex-black border-apex-border text-white placeholder:text-gray-500 focus:ring-apex-red focus:border-transparent"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -128,7 +134,7 @@ export const InventoryList = () => {
         <div className="flex gap-2 w-full md:w-auto">
           {/* Modern Status Filter */}
           <div className="relative">
-            <select 
+            <select
               className="h-10 appearance-none rounded-md border border-apex-border bg-apex-black pl-3 pr-8 text-sm text-white focus:outline-none focus:ring-1 focus:ring-apex-red cursor-pointer transition-shadow"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -138,7 +144,7 @@ export const InventoryList = () => {
               <option value="RESERVED">Reserved</option>
               <option value="SOLD">Sold</option>
             </select>
-            
+
             {/* Custom Arrow Icon */}
             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-apex-muted">
               <ChevronDown className="h-4 w-4" />
@@ -159,12 +165,12 @@ export const InventoryList = () => {
           {filteredVehicles.map((car) => (
             // CARD - Dark Theme
             <Card key={car.id} className="overflow-hidden hover:shadow-2xl transition-all duration-300 group relative bg-apex-surface border-apex-border hover:border-apex-gray">
-              
+
               {/* IMAGE */}
               <div className="relative h-48 bg-apex-black flex items-center justify-center overflow-hidden border-b border-apex-border">
                 {car.photo ? (
-                  <img 
-                    src={getImageUrl(car.photo)!} 
+                  <img
+                    src={getImageUrl(car.photo)!}
                     alt={`${car.make} ${car.model}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
                   />
@@ -174,35 +180,35 @@ export const InventoryList = () => {
                     <span className="text-xs uppercase tracking-widest">No Photo</span>
                   </div>
                 )}
-                
+
                 {/* ACTIONS OVERLAY */}
                 {(canEdit || canDelete) && (
-                    <div className="absolute top-2 right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      
-                      {/* Edit Button */}
-                      {canEdit && (
-                        <Button 
-                          size="icon" 
-                          variant="secondary" 
-                          className="h-8 w-8 bg-apex-black/80 hover:bg-apex-blue text-white shadow-md border border-white/10 backdrop-blur-sm" 
-                          onClick={() => handleEditClick(car)}
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                      )}
+                  <div className="absolute top-2 right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
 
-                      {/* Delete Button */}
-                      {canDelete && (
-                        <Button 
-                          size="icon" 
-                          variant="destructive" 
-                          className="h-8 w-8 shadow-md border border-red-500/50 bg-red-900/80 hover:bg-red-700 backdrop-blur-sm"
-                          onClick={() => handleDelete(car.id)}
-                        >
-                          <Trash2 className="h-4 w-4 text-white" />
-                        </Button>
-                      )}
-                    </div>
+                    {/* Edit Button */}
+                    {canEdit && (
+                      <Button
+                        size="icon"
+                        variant="secondary"
+                        className="h-8 w-8 bg-apex-black/80 hover:bg-apex-blue text-white shadow-md border border-white/10 backdrop-blur-sm"
+                        onClick={() => handleEditClick(car)}
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                    )}
+
+                    {/* Delete Button */}
+                    {canDelete && (
+                      <Button
+                        size="icon"
+                        variant="destructive"
+                        className="h-8 w-8 shadow-md border border-red-500/50 bg-red-900/80 hover:bg-red-700 backdrop-blur-sm"
+                        onClick={() => handleDelete(car.id)}
+                      >
+                        <Trash2 className="h-4 w-4 text-white" />
+                      </Button>
+                    )}
+                  </div>
                 )}
 
                 {/* PRICE TAG */}
@@ -232,8 +238,8 @@ export const InventoryList = () => {
                     <span className="font-mono text-white">{car.mileage.toLocaleString()} km</span>
                   </div>
                   <div className="col-span-2 flex flex-col mt-2">
-                      <span className="text-[10px] uppercase text-apex-silver tracking-wider font-bold">VIN</span>
-                      <span className="font-mono text-xs text-apex-muted truncate">{car.vin}</span>
+                    <span className="text-[10px] uppercase text-apex-silver tracking-wider font-bold">VIN</span>
+                    <span className="font-mono text-xs text-apex-muted truncate">{car.vin}</span>
                   </div>
                 </div>
               </CardContent>

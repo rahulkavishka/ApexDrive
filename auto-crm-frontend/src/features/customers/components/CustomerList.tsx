@@ -17,7 +17,11 @@ export const CustomerList = () => {
     const fetchCustomers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:8000/api/customers/360/', {
+        
+        // Use the environment variable here
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        
+        const res = await axios.get(`${API_URL}/api/customers/360/`, {
             headers: { Authorization: `Token ${token}` }
         });
         setCustomers(res.data);
@@ -29,7 +33,6 @@ export const CustomerList = () => {
     };
     fetchCustomers();
   }, []);
-
   // Filter
   const filteredCustomers = customers.filter(c => 
     c.name.toLowerCase().includes(searchTerm.toLowerCase()) || 

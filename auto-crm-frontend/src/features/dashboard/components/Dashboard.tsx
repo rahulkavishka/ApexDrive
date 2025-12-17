@@ -30,13 +30,16 @@ export const Dashboard = () => {
       const token = localStorage.getItem('token');
       const config = { headers: { Authorization: `Token ${token}` } };
 
+      // Define the base URL from environment variables
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
       const [carsRes, leadsRes, serviceRes, apptRes, analyticsRes, statsRes] = await Promise.all([
-        axios.get("http://localhost:8000/api/inventory/vehicles/", config),
-        axios.get("http://localhost:8000/api/sales/leads/", config),
-        axios.get("http://localhost:8000/api/service/records/", config),
-        axios.get("http://localhost:8000/api/service/appointments/", config),
-        axios.get("http://localhost:8000/api/analytics/", config),
-        axios.get("http://localhost:8000/api/dashboard/stats/", config)
+        axios.get(`${API_BASE_URL}/api/inventory/vehicles/`, config),
+        axios.get(`${API_BASE_URL}/api/sales/leads/`, config),
+        axios.get(`${API_BASE_URL}/api/service/records/`, config),
+        axios.get(`${API_BASE_URL}/api/service/appointments/`, config),
+        axios.get(`${API_BASE_URL}/api/analytics/`, config),
+        axios.get(`${API_BASE_URL}/api/dashboard/stats/`, config)
       ]);
 
       const cars = carsRes.data;
@@ -121,7 +124,7 @@ export const Dashboard = () => {
         />
         <StatsCard
           title="Inventory Value"
-          value={`$${(stats.inventoryValue / 1000).toFixed(1)}k`} 
+          value={`$${(stats.inventoryValue / 1000).toFixed(1)}k`}
           icon={<Briefcase className="h-6 w-6 text-apex-red" />}
           subtext="Asset Cost (Avail + Rsrvd)"
         />
@@ -138,7 +141,7 @@ export const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
+
         {/* RECENT ACTIVITY - EXPLICIT DARK BACKGROUND */}
         <Card className="bg-apex-surface border-apex-border">
           <CardHeader className="flex flex-row items-center justify-between border-b border-apex-border pb-4">
@@ -215,7 +218,7 @@ const QuickActionLink = ({ to, icon, label }: any) => (
     <span className="text-white font-medium">{label}</span>
     {/* Ensure icon gets correct colors on hover */}
     <div className="text-apex-silver group-hover:text-white transition-colors">
-        {icon}
+      {icon}
     </div>
   </Link>
 );

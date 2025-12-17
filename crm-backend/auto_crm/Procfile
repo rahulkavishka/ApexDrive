@@ -1,0 +1,1 @@
+web: gunicorn auto_crm.wsgi --timeout 120 --log-file -

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Calendar as CalendarIcon, Clock, User, Save, Trash2, ChevronLeft, ChevronRight, ChevronDown, Loader2, CalendarDays } from 'lucide-react';
+import api from '@/lib/api';
 
 // --- TYPES ---
 interface Appointment {
@@ -40,7 +41,7 @@ export const ServiceCalendar = () => {
   const fetchAppointments = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:8000/api/service/appointments/');
+      const res = await api.get('api/service/appointments/');
       setAppointments(res.data);
     } catch (error) {
       console.error("Error fetching appointments", error);
@@ -67,7 +68,7 @@ export const ServiceCalendar = () => {
         status: 'SCHEDULED'
       };
 
-      await axios.post('http://localhost:8000/api/service/appointments/', payload);
+      await api.post('api/service/appointments/', payload);
       
       setFormData({ ...formData, title: '', customer: '' });
       fetchAppointments();
@@ -83,7 +84,7 @@ export const ServiceCalendar = () => {
       setAppointments(prev => prev.map(appt => 
         appt.id === id ? { ...appt, status: newStatus } : appt
       ));
-      await axios.patch(`http://localhost:8000/api/service/appointments/${id}/`, { status: newStatus });
+      await api.patch(`api/service/appointments/${id}/`, { status: newStatus });
     } catch (error) {
       fetchAppointments(); 
     }
@@ -92,7 +93,7 @@ export const ServiceCalendar = () => {
   const handleDelete = async (id: number) => {
     if (!confirm("Delete this appointment?")) return;
     try {
-      await axios.delete(`http://localhost:8000/api/service/appointments/${id}/`);
+      await api.delete(`api/service/appointments/${id}/`);
       setAppointments(prev => prev.filter(appt => appt.id !== id));
     } catch (error) {
       alert("Failed to delete.");

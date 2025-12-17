@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Users, Phone, CarFront, Search, Trash2, ChevronDown, DollarSign } from "lucide-react";
 import { useAuth } from '@/context/AuthContext';
+import api from "@/lib/api";
 
 interface Lead {
   id: number;
@@ -41,7 +42,7 @@ export const LeadsList = () => {
 
   const fetchLeads = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/sales/leads/");
+      const res = await api.get("api/sales/leads/");
       setLeads(res.data);
     } catch (error) {
       console.error("Error fetching leads", error);
@@ -57,12 +58,12 @@ export const LeadsList = () => {
 
     try {
       if (leadToDelete?.status === 'NEGOTIATION' && leadToDelete.vehicle) {
-        await axios.patch(`http://localhost:8000/api/inventory/vehicles/${leadToDelete.vehicle}/`, {
+        await api.patch(`api/inventory/vehicles/${leadToDelete.vehicle}/`, {
           status: 'AVAILABLE'
         });
       }
 
-      await axios.delete(`http://localhost:8000/api/sales/leads/${id}/`);
+      await api.delete(`api/sales/leads/${id}/`);
       setLeads(leads.filter(lead => lead.id !== id));
 
     } catch (error) {
@@ -79,17 +80,17 @@ export const LeadsList = () => {
         lead.id === id ? { ...lead, status: newStatus } : lead
       ));
 
-      await axios.patch(`http://localhost:8000/api/sales/leads/${id}/`, { status: newStatus });
+      await api.patch(`api/sales/leads/${id}/`, { status: newStatus });
 
       if (leadToUpdate?.vehicle) {
         if (newStatus === 'LOST') {
-          await axios.patch(`http://localhost:8000/api/inventory/vehicles/${leadToUpdate.vehicle}/`, {
+          await api.patch(`api/inventory/vehicles/${leadToUpdate.vehicle}/`, {
             status: 'AVAILABLE'
           });
           alert("Lead marked LOST. Vehicle is now AVAILABLE.");
         }
         else if (newStatus === 'SOLD') {
-          await axios.patch(`http://localhost:8000/api/inventory/vehicles/${leadToUpdate.vehicle}/`, {
+          await api.patch(`api/inventory/vehicles/${leadToUpdate.vehicle}/`, {
             status: 'SOLD'
           });
           alert("Congratulations! Vehicle marked as SOLD.");

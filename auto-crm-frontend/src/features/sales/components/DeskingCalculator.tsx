@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Calculator, Search, Save, User, Printer, ChevronDown } from "lucide-react";
+import api from "@/lib/api";
 
 interface Vehicle {
   id: number;
@@ -54,7 +55,7 @@ export const DeskingCalculator = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/inventory/vehicles/");
+        const res = await api.get("/api/inventory/vehicles/");
         const availableCars = res.data.filter((v: Vehicle) => v.status === 'AVAILABLE');
         setVehicles(availableCars);
       } catch (error) {
@@ -107,7 +108,7 @@ export const DeskingCalculator = () => {
     }
 
     try {
-      await axios.post("http://localhost:8000/api/sales/leads/", {
+      await api.post("/api/sales/leads/", {
         first_name: customerName.split(" ")[0],
         last_name: customerName.split(" ")[1] || "",
         phone: customerPhone,
@@ -121,7 +122,7 @@ export const DeskingCalculator = () => {
         notes: `Deal Structure: Price $${vehiclePrice}, Down $${downPayment}, Rate ${interestRate}%, Term ${months}mo.`
       });
 
-      await axios.patch(`http://localhost:8000/api/inventory/vehicles/${selectedVehicle.id}/`, {
+      await api.patch(`/api/inventory/vehicles/${selectedVehicle.id}/`, {
         status: 'RESERVED'
       });
 

@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Badge } from "@/components/ui/badge";
 import { Users, UserPlus, Trash2, ShieldAlert, Shield, Briefcase, Wrench, ChevronDown, Calendar, User } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import api from '@/lib/api';
 
 export const TeamManagement = () => {
   const { isManager, token } = useAuth();
@@ -24,7 +25,7 @@ export const TeamManagement = () => {
   // --- FETCH USERS ---
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/users/', {
+      const res = await api.get('api/users/', {
         headers: { Authorization: `Token ${token}` }
       });
       setUsers(res.data);
@@ -42,7 +43,7 @@ export const TeamManagement = () => {
   // --- HANDLERS ---
   const handleCreateUser = async () => {
     try {
-      await axios.post('http://localhost:8000/api/users/', formData, {
+      await api.post('api/users/', formData, {
         headers: { Authorization: `Token ${token}` }
       });
       alert("User Created Successfully! 🎉");
@@ -57,7 +58,7 @@ export const TeamManagement = () => {
   const handleDelete = async (id: number) => {
     if (!window.confirm("Are you sure you want to delete this user? This cannot be undone.")) return;
     try {
-      await axios.delete(`http://localhost:8000/api/users/${id}/`, {
+      await api.delete(`api/users/${id}/`, {
          headers: { Authorization: `Token ${token}` }
       });
       setUsers(prev => prev.filter(u => u.id !== id));

@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useReactToPrint } from 'react-to-print';
 import { PrintableJobCard } from './PrintableJobCard';
 import { PrintableInvoice } from './PrintableInvoice';
+import api from '@/lib/api';
 
 
 // --- TYPES ---
@@ -64,7 +65,7 @@ export const LicensePlateScanner = () => {
   // --- 1. FETCH ACTIVE JOBS ---
   const fetchActiveJobs = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/service/records/");
+      const res = await api.get("api/service/records/");
       const todayStr = new Date().toDateString();
 
       const todaysJobs = res.data.filter((job: any) => {
@@ -86,7 +87,7 @@ export const LicensePlateScanner = () => {
   const handleStatusChange = async (id: number, newStatus: string) => {
     try {
       setActiveJobs(activeJobs.map(job => job.id === id ? { ...job, status: newStatus } : job));
-      await axios.patch(`http://localhost:8000/api/service/records/${id}/`, { status: newStatus });
+      await api.patch(`api/service/records/${id}/`, { status: newStatus });
     } catch (error) {
       console.error("Update failed");
       fetchActiveJobs(); 
@@ -114,7 +115,7 @@ export const LicensePlateScanner = () => {
     formData.append('image', selectedImage);
 
     try {
-      const res = await axios.post('http://localhost:8000/api/service/scan-plate/', formData, {
+      const res = await api.post('api/service/scan-plate/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       processScanResult(res.data.plate, res.data.existing_vehicle);
@@ -131,7 +132,7 @@ export const LicensePlateScanner = () => {
     if (!manualPlate) return;
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:8000/api/service/vehicles/');
+      const res = await api.get('api/service/vehicles/');
       const vehicles: VehicleData[] = res.data;
 
       const found = vehicles.find(v =>
@@ -162,12 +163,12 @@ export const LicensePlateScanner = () => {
   // --- 6. REGISTER NEW CUSTOMER ---
   const handleRegister = async () => {
     try {
-      const custRes = await axios.post('http://localhost:8000/api/service/customers/', {
+      const custRes = await api.post('api/service/customers/', {
         name: newCustomer.name,
         phone: newCustomer.phone
       });
 
-      const vehRes = await axios.post('http://localhost:8000/api/service/vehicles/', {
+      const vehRes = await api.post('api/service/vehicles/', {
         license_plate: detectedPlate,
         make: newCustomer.make,
         model: newCustomer.model,
@@ -187,7 +188,7 @@ export const LicensePlateScanner = () => {
   const handleCreateJob = async () => {
     if (!existingVehicle || !newJob) return;
     try {
-      await axios.post('http://localhost:8000/api/service/records/', {
+      await api.post('api/service/records/', {
         vehicle: existingVehicle.id,
         description: newJob,
         status: 'PENDING'
@@ -246,7 +247,7 @@ export const LicensePlateScanner = () => {
   const saveBillingAndPrint = async () => {
     if (!billingJob) return;
     try {
-      const res = await axios.patch(`http://localhost:8000/api/service/records/${billingJob.id}/`, {
+      const res = await api.patch(`api/service/records/${billingJob.id}/`, {
         parts_cost: costs.parts,
         labor_cost: costs.labor,
         status: 'COMPLETED' 

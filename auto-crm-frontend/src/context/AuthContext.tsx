@@ -1,10 +1,14 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
+// Define the API Base URL dynamically
+// If VITE_API_URL is set (Production), use it. Otherwise use localhost (Development).
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 interface AuthContextType {
     user: any;
     token: string | null;
-    isManager: boolean;  // <--- NEW: Simple flag for permissions
+    isManager: boolean;
     login: (username: string, pass: string) => Promise<void>;
     logout: () => void;
     isLoading: boolean;
@@ -15,21 +19,17 @@ const AuthContext = createContext<AuthContextType>(null!);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<any>(null);
     const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
-    const [isManager, setIsManager] = useState(false); // <--- NEW
+    const [isManager, setIsManager] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     // Helper to fetch profile
     const fetchProfile = async (currentToken: string) => {
         try {
             axios.defaults.headers.common['Authorization'] = `Token ${currentToken}`;
-            const res = await axios.get('http://localhost:8000/api/me/');
+            // UPDATED: Use API_URL constant
+            const res = await axios.get(`${API_URL}/api/me/`);
 
-            // --- ADD THESE DEBUG LOGS ---
             console.log("🔍 API CHECK:", res.data);
-            console.log("👤 User:", res.data.username);
-            console.log("🛡️ Is Manager?", res.data.is_manager);
-            // ----------------------------
-
             setUser({ username: res.data.username });
             setIsManager(res.data.is_manager);
         } catch (error) {
@@ -38,7 +38,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const login = async (username: string, pass: string) => {
-        const res = await axios.post('http://localhost:8000/api-token-auth/', {
+        // UPDATED: Use API_URL constant
+        const res = await axios.post(`${API_URL}/api-token-auth/`, {
             username: username,
             password: pass
         });
@@ -46,7 +47,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setToken(newToken);
         localStorage.setItem('token', newToken);
 
-        // Fetch Role immediately after login
         await fetchProfile(newToken);
     };
 
@@ -58,7 +58,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         delete axios.defaults.headers.common['Authorization'];
     };
 
-    // Restore session on refresh
     useEffect(() => {
         if (token) {
             fetchProfile(token).finally(() => setIsLoading(false));

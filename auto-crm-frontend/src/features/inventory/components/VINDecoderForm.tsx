@@ -4,8 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Box, Briefcase, Loader2, Save, Search, Upload, X } from 'lucide-react';
-import axios from 'axios';
 import { InventoryList } from './InventoryList'; 
+import api from '@/lib/api';
 
 export const VINDecoderForm = () => {
   // 1. Search State
@@ -34,62 +34,69 @@ export const VINDecoderForm = () => {
 
   // --- Step 1: Decode VIN ---
   const handleDecode = async () => {
-    if (!vin) return alert("Please enter a VIN");
-    setLoading(true);
-    try {
-      const res = await axios.post('http://localhost:8000/api/inventory/decode-vin/', { vin });
-      
-      setFormData(prev => ({
-        ...prev,
-        make: res.data.make || '',
-        model: res.data.model || '',
-        year: res.data.year || '',
-        trim: res.data.trim || '',
-        body_style: (res.data.body_style || '').slice(0, 50),
-        vin: vin
-      }));
-    } catch (error) {
-      alert("Failed to decode VIN. Check internet or VIN validity.");
-    } finally {
-      setLoading(false);
+  if (!vin) return alert("Please enter a VIN");
+  setLoading(true);
+  try {
+    // Just use the relative path; the base URL is added automatically
+    const res = await api.post('/api/inventory/decode-vin/', { vin });
+    
+    setFormData(prev => ({
+      ...prev,
+      make: res.data.make || '',
+      model: res.data.model || '',
+      year: res.data.year || '',
+      trim: res.data.trim || '',
+      body_style: (res.data.body_style || '').slice(0, 50),
+      vin: vin
+    }));
+  } catch (error) {
+    alert("Failed to decode VIN. Check internet or VIN validity.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+// --- Step 2: Save to Database ---
+const handleSave = async () => {
+  try {
+    if (!formData.stock_number || !formData.selling_price) {
+      return alert("Please enter Stock Number and Selling Price");
     }
-  };
 
-  // --- Step 2: Save to Database ---
-  const handleSave = async () => {
-    try {
-      if (!formData.stock_number || !formData.selling_price) {
-        return alert("Please enter Stock Number and Selling Price");
-      }
+    const data = new FormData();
+    Object.keys(formData).forEach(key => {
+      // @ts-ignore
+      data.append(key, formData[key]);
+    });
 
-      const data = new FormData();
-      Object.keys(formData).forEach(key => {
-        // @ts-ignore
-        data.append(key, formData[key]);
-      });
-
-      if (photo) {
-        data.append('photo', photo);
-      }
-
-      await axios.post('http://localhost:8000/api/inventory/vehicles/', data, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      
-      setRefreshKey(prev => prev + 1);
-
-      setVin('');
-      setPhoto(null);
-      setFormData({
-        make: '', model: '', year: '', trim: '', body_style: '', vin: '',
-        stock_number: '', color: '', mileage: 0, cost_price: 0, selling_price: 0, status: 'AVAILABLE'
-      });
-      
-    } catch (error: any) {
-      console.error(error);
-      alert("Error saving vehicle: " + JSON.stringify(error.response?.data));
+    if (photo) {
+      data.append('photo', photo);
     }
-  };
+
+    // No need to manually add the Authorization Token anymore!
+    // We only keep the multipart/form-data header because of the photo upload.
+    await api.post('/api/inventory/vehicles/', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    
+    setRefreshKey(prev => prev + 1);
+
+    setVin('');
+    setPhoto(null);
+    setFormData({
+      make: '', model: '', year: '', trim: '', body_style: '', vin: '',
+      stock_number: '', color: '', mileage: 0, cost_price: 0, selling_price: 0, status: 'AVAILABLE'
+    });
+    
+  } catch (error: any) {
+    console.error(error);
+    // Cleaner error handling using optional chaining
+    const errorMessage = error.response?.data 
+      ? JSON.stringify(error.response.data) 
+      : "Server unreachable";
+    alert("Error saving vehicle: " + errorMessage);
+  }
+};
 
   const handleChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
