@@ -1,0 +1,54 @@
+Real Example (Tesla Model 3): 5YJ3E1EA1JF000001
+Real Example (Ford F-150): 1FTEW1E50KFA00001
+1FDUF4HT4CEB80396 2012 Ford F-450 SD
+1GDJC34U73E298494 2003 GMC Sierra 3500
+5NMS2CAD4KH082095 2019 Hyundai Santa Fe
+2T3N1RFV7LC105629 2020 Toyota RAV4
+1HGCT1A86FA827097 2015 Honda Accord
+1GTJC39275E213863 2005 GMC Sierra 3500
+JT4RN81D8L0039495  1990 Toyota Pickup
+1GTEC14H3JZ541835 1988 GMC Sierra C/K 1500
+3C7WRKEJ7HG504388 2017 RAM 4500
+1FD7X2A68EEB29067 2014 Ford F-250 SD
+4JGDM2DB6RA030989 2024 Mercedes-Benz EQS
+1GC4YREY6PF130644 2023 Chevrolet Silverado 2500HD
+WAUABBF42PN784907 2023 Audi A4
+ZASPAKBN5S7849961 2025 Alfa Romeo Stelvio
+JM3KJCHD0S1112610 2025 Mazda CX-70
+5GAERCKW7NJ112442 2022 Buick Enclave
+JTDEAMDE3NJ053695 2022 Toyota Corolla
+
+Primary Brand	Deep Midnight Blue	#0B1C2D
+Accent / Action	Performance Red	#E63946
+Secondary Brand	Steel Gray	#2F3A44
+
+
+Primary Colors (Brand Core)
+| Purpose             | Color              | Hex       |
+| ------------------- | ------------------ | --------- |
+| **Primary Brand**   | Deep Midnight Blue | `#0B1C2D` |
+| **Accent / Action** | Performance Red    | `#E63946` |
+| **Secondary Brand** | Steel Gray         | `#2F3A44` |
+
+UI & Dashboard Colors
+| Purpose            | Color         | Hex       |
+| ------------------ | ------------- | --------- |
+| Background         | Carbon Black  | `#121417` |
+| Surface / Cards    | Dark Graphite | `#1C1F26` |
+| Borders / Dividers | Iron Gray     | `#2A2E35` |
+| Text Primary       | Snow White    | `#F1F3F5` |
+| Text Secondary     | Muted Silver  | `#A8ADB3` |
+
+Status & System Colors
+| Status  | Color         | Hex       |
+| ------- | ------------- | --------- |
+| Success | Racing Green  | `#2ECC71` |
+| Warning | Signal Amber  | `#F4A261` |
+| Error   | Crimson Red   | `#D90429` |
+| Info    | Electric Blue | `#3A86FF` |
+
+Highlight / Premium Touch
+| Purpose         | Color         | Hex                 |
+| --------------- | ------------- | ------------------- |
+| Premium Accent  | Chrome Silver | `#BFC9D1`           |
+| Gradient Option | Apex Gradient | `#0B1C2D → #1F4E79` |
