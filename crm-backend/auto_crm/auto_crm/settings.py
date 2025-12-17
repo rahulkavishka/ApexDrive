@@ -117,6 +117,11 @@ CORS_ALLOWED_ORIGINS = os.environ.get(
     'http://localhost:5173'
 ).split(',')
 
+CSRF_TRUSTED_ORIGINS = os.environ.get(
+    'CSRF_TRUSTED_ORIGINS', 
+    'http://localhost:5173'
+).split(',')
+
 # Optional: If you face persistent CORS issues during initial deployment,
 # uncomment this line temporarily to allow all domains.
 # CORS_ALLOW_ALL_ORIGINS = True  
