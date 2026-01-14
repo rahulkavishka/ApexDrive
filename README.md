@@ -7,14 +7,16 @@
 
 ## 📖 Overview
 
-[cite_start]ApexDrive CRM is a comprehensive B2B solution designed to streamline operations for car dealerships[cite: 22, 107]. Beyond standard customer and inventory management, it integrates advanced **Artificial Intelligence** to automate manual tasks.
+ApexDrive CRM is a comprehensive B2B solution designed to streamline operations for car dealerships[cite: 22, 107]. Beyond standard customer and inventory management, it integrates advanced **Artificial Intelligence** to automate manual tasks.
 
-[cite_start]Key innovations include an **EasyOCR** module for automatic number plate recognition from vehicle images [cite: 23, 67, 107] [cite_start]and an **Autonomous Sales Agent** (powered by n8n) that handles inquiries and books test drives 24/7[cite: 24].
+Key innovations include an **EasyOCR** module for automatic number plate recognition from vehicle images [cite: 23, 67, 107] [cite_start]and an **Autonomous Sales Agent** (powered by n8n) that handles inquiries and books test drives 24/7 ![View on GitHub]([https://github.com/username/repository](https://github.com/rahulkavishka/ApexDrive-Bot)).
 
-![Image 1](https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152372/1_pd21ra.png)
-![Image 2](https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152373/2_obcnhd.png)
-![Image 3](https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152373/3_nx0jia.png)
-![Image 4](https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152380/4_x0uty0.png)
+<p float="left">
+  <img src="https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152372/1_pd21ra.png" width="200" />
+  <img src="https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152373/2_obcnhd.png" width="200" />
+  <img src="https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152373/3_nx0jia.png" width="200" />
+  <img src="https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152380/4_x0uty0.png" width="200" />
+</p>
 
 ## 🚀 Key Features
 
