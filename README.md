@@ -9,7 +9,7 @@
 
 ApexDrive CRM is a comprehensive B2B solution designed to streamline operations for car dealerships[cite: 22, 107]. Beyond standard customer and inventory management, it integrates advanced **Artificial Intelligence** to automate manual tasks.
 
-Key innovations include an **EasyOCR** module for automatic number plate recognition from vehicle images [cite: 23, 67, 107] [cite_start]and an **Autonomous Sales Agent** (powered by n8n) that handles inquiries and books test drives 24/7 ![View on GitHub]((https://github.com/rahulkavishka/ApexDrive-Bot)).
+Key innovations include an **EasyOCR** module for automatic number plate recognition from vehicle images [cite: 23, 67, 107] [cite_start]and an **Autonomous Sales Agent** (powered by n8n) that handles inquiries and books test drives 24/7 [View on GitHub]((https://github.com/rahulkavishka/ApexDrive-Bot)).
 
 <p float="left">
   <img src="https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152372/1_pd21ra.png" width="400" />
