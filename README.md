@@ -7,9 +7,9 @@
 
 ## 📖 Overview
 
-ApexDrive CRM is a comprehensive B2B solution designed to streamline operations for car dealerships[cite: 22, 107]. Beyond standard customer and inventory management, it integrates advanced **Artificial Intelligence** to automate manual tasks.
+ApexDrive CRM is a comprehensive B2B solution designed to streamline operations for car dealerships. Beyond standard customer and inventory management, it integrates advanced **Artificial Intelligence** to automate manual tasks.
 
-Key innovations include an **EasyOCR** module for automatic number plate recognition from vehicle images [cite: 23, 67, 107] [cite_start]and an **Autonomous Sales Agent** (powered by n8n) that handles inquiries and books test drives 24/7 [View on GitHub]((https://github.com/rahulkavishka/ApexDrive-Bot)).
+Key innovations include an **EasyOCR** module for automatic number plate recognition from vehicle images, and an **Autonomous Sales Agent** (powered by n8n) that handles inquiries and books test drives 24/7 [View on GitHub](https://github.com/rahulkavishka/ApexDrive-Bot).
 
 <p float="left">
   <img src="https://res.cloudinary.com/dagj9begy/image/upload/f_auto,q_auto/v1766152372/1_pd21ra.png" width="400" />
@@ -24,7 +24,7 @@ Key innovations include an **EasyOCR** module for automatic number plate recogni
 
 ### 🤖 AI & Automation
 - **Automatic Number Plate Recognition (ANPR):** Integrated **EasyOCR** to automatically extract and log vehicle registration numbers from uploaded images, reducing manual data entry.
-- **Autonomous SDR Agent (ApexDrive-Bot):** A "24/7 Sales Bot" built with **n8n** and **OpenAI**. [cite_start]It queries the live inventory database to answer customer questions and performs function calling to autonomously schedule test drives.
+- **Autonomous SDR Agent (ApexDrive-Bot):** A "24/7 Sales Bot" built with **n8n** and **OpenAI**. It queries the live inventory database to answer customer questions and performs function calling to autonomously schedule test drives.
 
 ### 💻 Dashboard & Management
 - **Inventory Management:** Real-time tracking of vehicle stock, status, and pricing.
